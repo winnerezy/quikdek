@@ -12,21 +12,3 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
-
-model Users {
-  @@map("users")
-  id String @id @unique
-  username String @unique
-  email String
-  avatar String
-  folders Folders[]
-  joinedat DateTime @default(now())
-}
-
-model Folders {
-  id String
-  name String
-  userid String @unique
-  users Users @relation(fields: [userid], references: [id])
-  createdaat DateTime @default(now())
-}

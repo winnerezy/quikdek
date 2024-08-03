@@ -1,26 +1,20 @@
-"use client";
+'use client'
 
 import { CiCircleInfo, CiSquarePlus } from "react-icons/ci";
-import { BiMenu, BiSearch } from "react-icons/bi";
+import { BiMenu } from "react-icons/bi";
+import { SearchInput } from "./SearchInput";
 import Link from "next/link";
-import { Input, Popover, PopoverButton, PopoverPanel } from "@headlessui/react";
+import { Popover, PopoverButton, PopoverPanel } from "@headlessui/react";
 import { useDispatch } from "react-redux";
 import { openSideBar } from "@/lib/redux/sidebarSlice";
-import { MouseEventHandler, useState } from "react";
 
 export const Header = () => {
-  const dispatch = useDispatch();
 
-  const [search, setSearch] = useState<string>("")
-
-
+  const dispatch = useDispatch()
   return (
     <div className="flex items-center self-center w-full h-14 relative gap-4 justify-between">
       <div className="w-min h-14 flex gap-4 items-center">
-        <BiMenu
-          className="size-8 text-[--blue] block md:hidden cursor-pointer"
-          onClick={() => dispatch(openSideBar())}
-        />
+        <BiMenu className="size-8 text-[--blue] block md:hidden cursor-pointer" onClick={() => dispatch(openSideBar())} />
         <Link
           href={"/home"}
           className="text-[--blue] font-bold text-2xl tracking-wide w-36"
@@ -28,14 +22,7 @@ export const Header = () => {
           Quick Deck
         </Link>
       </div>
-      <section className="bg-[--blue] text-white max-w-2xl w-full h-10 p-2 rounded-lg flex gap-2 self-center items-center max-md:absolute max-md:top-16">
-        <BiSearch className="size-6" />
-        <Input
-          className="outline-none w-full bg-[--blue] placeholder:text-gray-300"
-          placeholder="Search for flash cards..."
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearch(e.target.value)}
-        />
-      </section>
+      <SearchInput />
       <div className="h-14 flex gap-4 items-center">
         <CiSquarePlus className="size-8 text-[--blue]" />
 
