@@ -1,0 +1,162 @@
+"use client";
+
+import { BiPlus } from "react-icons/bi";
+import { NewFlashCard } from "./NewFlashCard";
+import { ChangeEvent, useEffect, useState } from "react";
+import { Input, Textarea } from "@headlessui/react";
+import { saveDeck } from "@/lib/actions";
+import { redirect } from "next/navigation";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch } from "@/lib/redux/store";
+import { fetchFolders } from "@/lib/redux/thunk";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
+export const DeckForm = () => {
+  const dispatch = useDispatch<AppDispatch>();
+
+  const [title, setTitle] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
+  const [folder, setFolder] = useState<string>("")
+  // const [visible, setVisible] = useState<visibility>(visibility.PUBLIC)
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const [flashcards, setFlashCards] = useState<FlashCardData[]>([
+    { id: 1, question: "", answer: "" },
+    { id: 2, question: "", answer: "" },
+    { id: 3, question: "", answer: "" },
+  ]);
+
+  const handleNewFlashCard = () => {
+    const newId = flashcards.length
+      ? Math.max(...flashcards.map((fc) => fc.id)) + 1
+      : 1;
+    setFlashCards((prevflashcards) => [
+      ...prevflashcards,
+      { id: newId, question: "", answer: "" },
+    ]);
+  };
+
+  const handleRemoveFlashCard = (id: number) => {
+    setFlashCards(flashcards.filter((fc) => fc.id !== id));
+  };
+
+  const handleUpdateFlashCard = (
+    id: number,
+    updatedData: Partial<FlashCardData>
+  ) => {
+    setFlashCards(
+      flashcards.map((fc) => (fc.id === id ? { ...fc, ...updatedData } : fc))
+    );
+  };
+
+  useEffect(() => {
+    dispatch(fetchFolders());
+  }, []);
+
+  const folders = useSelector((state: State) => state.folder.folders);
+
+  // const visibilityOptions = [
+  //   { value: visibility.PUBLIC, label: 'Public' },
+  //   { value: visibility.PRIVATE, label: 'Private' }
+  // ]
+
+  const handleSave = async () => {
+    try {
+      setIsLoading(true);
+      await saveDeck({
+        title,
+        description,
+        flashcards,
+        folderid: folder
+      });
+      redirect("/my-decks");
+    } catch (error: any) {
+      console.log(error.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <section className="w-full flex flex-col gap-6">
+      <div className="flex flex-col max-w-[1000px] w-full space-y-8 self-center">
+        <h3 className="font-semibold text-[--blue] text-2xl max-md:mt-20">
+          Create a deck
+        </h3>
+        <button
+          className="bg-[--blue] w-24 h-10 rounded-lg self-end"
+          onClick={handleSave}
+          disabled={isLoading}
+        >
+          {isLoading ? (
+            <span className="loading loading-dots loading-md self-center"></span>
+          ) : (
+            "Save Deck"
+          )}
+        </button>
+        <Input
+          className="outline-none w-full py-4 border-b-4 border-[--blue] text-[--input-text] placeholder:text-gray-300 bg-transparent"
+          placeholder="Enter a title e.g 'Organic Chemistry Chapter 4'"
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            setTitle(e.target.value)
+          }
+        />
+        <Textarea
+          className="outline-none w-full py-4 border-b-4 border-[--blue] text-[--input-text] placeholder:text-gray-300 bg-transparent"
+          placeholder="Add a description (optional)"
+          onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
+            setDescription(e.target.value)
+          }
+        />
+        <section className="self-start space-x-4">
+          <Select onValueChange={(e) => setFolder(e)}>
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Select a folder" className="text=-black border border-[--blue]"/>
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                {
+                  folders.map((folder) =>  <SelectItem value={ folder.id }>{ folder.name }</SelectItem> )
+                }
+
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+          {/* <Select className="w-48 border border-[--blue] rounded-lg focus:outline-none text-[--blue]"
+            options={visibilityOptions}
+            defaultValue={visibilityOptions[0]}
+            onChange={(e) => setVisible(e?.value!)}
+          /> */}
+        </section>
+      </div>
+      <div className="flex flex-col gap-6 max-w-[1000px] w-full self-center">
+        {flashcards.map((flashcard, index) => (
+          <NewFlashCard
+            index={index}
+            key={flashcard.id}
+            question={flashcard.question}
+            answer={flashcard.answer}
+            onRemove={() => handleRemoveFlashCard(flashcard.id)}
+            onUpdate={(updatedData) =>
+              handleUpdateFlashCard(flashcard.id, updatedData)
+            }
+          />
+        ))}
+        <button
+          className="btn border border-[--blue] bg-transparent"
+          onClick={handleNewFlashCard}
+        >
+          <BiPlus className="size-8 text-[--blue]" />
+        </button>
+      </div>
+    </section>
+  );
+};

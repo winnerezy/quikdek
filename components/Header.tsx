@@ -1,20 +1,48 @@
-'use client'
+"use client";
 
-import { CiCircleInfo, CiSquarePlus } from "react-icons/ci";
+import { CiSettings, CiSquarePlus } from "react-icons/ci";
 import { BiMenu } from "react-icons/bi";
 import { SearchInput } from "./SearchInput";
 import Link from "next/link";
-import { Popover, PopoverButton, PopoverPanel } from "@headlessui/react";
 import { useDispatch } from "react-redux";
 import { openSideBar } from "@/lib/redux/sidebarSlice";
+import Image from "next/image";
+import { useCallback, useEffect, useState } from "react";
+import { getCurrentUser, handleSignOut } from "@/lib/actions";
+import { CgFolderAdd, CgProfile } from "react-icons/cg";
+import { TbCards, TbSun, TbTrophy } from "react-icons/tb";
+import { LuLogOut } from "react-icons/lu";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu";
+import { openNewFolderModal } from "@/lib/redux/newFolderSlice";
 
 export const Header = () => {
+  const [user, setUser] = useState<User | null>(null);
 
-  const dispatch = useDispatch()
+  const fetchUser = useCallback(async () => {
+    const currentUser = await getCurrentUser();
+    setUser(currentUser);
+  }, []);
+
+  useEffect(() => {
+    fetchUser();
+  }, [fetchUser]);
+
+  const dispatch = useDispatch();
+
   return (
-    <div className="flex items-center self-center w-full h-14 relative gap-4 justify-between">
+    <header className="flex items-center h-14 sticky top-0 gap-4 justify-between z-40 bg-[--background] lg:ml-[250px]">
       <div className="w-min h-14 flex gap-4 items-center">
-        <BiMenu className="size-8 text-[--blue] block md:hidden cursor-pointer" onClick={() => dispatch(openSideBar())} />
+        <BiMenu
+          className="size-8 text-[--blue] block md:hidden cursor-pointer"
+          onClick={() => dispatch(openSideBar())}
+        />
         <Link
           href={"/home"}
           className="text-[--blue] font-bold text-2xl tracking-wide w-36"
@@ -24,45 +52,106 @@ export const Header = () => {
       </div>
       <SearchInput />
       <div className="h-14 flex gap-4 items-center">
-        <CiSquarePlus className="size-8 text-[--blue]" />
+      <DropdownMenu>
+          <DropdownMenuTrigger>
+          <CiSquarePlus className="size-8 text-[--blue]" />
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="border-none space-y-2 mr-4 p-2 w-[200px]">
+           
+            <DropdownMenuItem onClick={() => dispatch(openNewFolderModal())}>
+              <div 
+              className="text-md font-semibold flex gap-4 items-center">
+               
+               <CgFolderAdd/>
+                <p>Create Folder</p>
+              </div>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <div className="text-md font-semibold flex gap-4 items-center">
+               
+               <TbCards/>
+                <p>Create Deck</p>
+              </div>
+            </DropdownMenuItem>
 
-        <Popover>
-          <PopoverButton className="block text-sm/6 font-semibold text-white/50 focus:outline-none data-[active]:text-white data-[hover]:text-white data-[focus]:outline-1 data-[focus]:outline-white">
-            <CiCircleInfo className="size-8 text-[--blue]" />
-          </PopoverButton>
-          <PopoverPanel
-            transition
-            anchor="bottom"
-            className="divide-y divide-white/5 rounded-xl bg-black text-sm/6 transition duration-200 ease-in-out [--anchor-gap:var(--spacing-5)] data-[closed]:-translate-y-1 data-[closed]:opacity-0 z-[99999]"
-          >
-            <div className="p-3 w-[200px] h-[200px] mr-24">
-              <a
-                className="block rounded-lg py-2 px-3 transition hover:bg-white/5"
-                href="#"
+          </DropdownMenuContent>
+        </DropdownMenu>
+       
+
+        <DropdownMenu>
+          <DropdownMenuTrigger className="rounded-full">
+            <Image
+              src={user?.avatar!}
+              width={40}
+              height={40}
+              alt={user?.username!}
+              className="rounded-full"
+            />
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="border-none h-[300px] space-y-2 mr-4 p-2 w-[300px]">
+            <DropdownMenuLabel>
+              <div className="w-full flex gap-2 items-center">
+                <div className="avatar">
+                  <div className="w-14 rounded-full">
+                    <Image
+                      src={user?.avatar!}
+                      width={20}
+                      height={20}
+                      alt={ user?.username! }
+                    />
+                  </div>
+                </div>
+                <section className="flex flex-col">
+                  <p>{user?.username}</p>
+                  <p>{user?.email}</p>
+                </section>
+              </div>
+            </DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>
+              <div className="text-md font-semibold flex gap-4 items-center">
+                <TbTrophy />
+                <p>12 Streaks</p>
+              </div>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <Link
+                className="text-md font-semibold flex gap-4 items-center"
+                href="/profile"
               >
-                <p className="font-semibold text-white">Insights</p>
-                <p className="text-white/50">Measure actions your users take</p>
-              </a>
-              <a
-                className="block rounded-lg py-2 px-3 transition hover:bg-white/5"
-                href="#"
+                <CgProfile />
+                <p className="font-semibold">Profile</p>
+              </Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <Link
+                className="text-md font-semibold flex gap-4 items-center"
+                href="/settings"
               >
-                <p className="font-semibold text-white">Automations</p>
-                <p className="text-white/50">
-                  Create your own targeted content
-                </p>
-              </a>
-              <a
-                className="block rounded-lg py-2 px-3 transition hover:bg-white/5"
-                href="#"
+                <CiSettings />
+                <p className="font-semibold">Settings</p>
+              </Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <div
+                className="text-md font-semibold flex gap-4 items-center"
               >
-                <p className="font-semibold text-white">Reports</p>
-                <p className="text-white/50">Keep track of your growth</p>
-              </a>
-            </div>
-          </PopoverPanel>
-        </Popover>
+                <TbSun />
+                <p className="font-semibold">Light Mode</p>
+              </div>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <button
+                className="text-md font-semibold flex gap-4 items-center"
+                onClick={() => handleSignOut()}
+              >
+                <LuLogOut />
+                <p className="font-semibold">Log Out</p>
+              </button>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
-    </div>
+    </header>
   );
 };

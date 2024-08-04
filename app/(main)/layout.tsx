@@ -7,6 +7,7 @@ import { Sidebar } from "@/components/Sidebar";
 import { Footer } from "@/components/Footer";
 import { Provider } from "react-redux";
 import { store } from "@/lib/redux/store";
+import { NewFolderModal } from "@/components/NewFolderModal";
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -27,8 +28,10 @@ export default function RootLayout({
           <main className="flex flex-col w-full min-h-screen">
             {children}
           <Footer />
+         
           </main>
         </section>
+          <NewFolderModal/>
       </body>
     </html>
    </Provider>
