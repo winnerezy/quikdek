@@ -20,25 +20,36 @@ export const getCurrentUser = async () => {
   }
 };
 
-export const saveDeck = async ({ title, description, visibility, flashcards, folderid  }: { title: string, description: string | null, visibility: visibility, flashcards: FlashCardData[], folderid: string }) => {
+export const saveDeck = async ({
+  title,
+  description,
+  visibility,
+  flashcards,
+  folderid,
+}: {
+  title: string;
+  description: string | null;
+  visibility: visibility;
+  flashcards: FlashCardData[];
+  folderid: string;
+}) => {
   try {
     const user = await getCurrentUser();
-  
+
     const deck = await prisma.decks.create({
       data: {
         title,
         description,
         userid: user?.id!,
         visibility,
-        folderid
+        folderid,
       },
     });
     // saving all the flash cards individually
     await Promise.all(
       flashcards.map(
-        async (flashcard) =>
-         (
-          console.log('Saving flashcard:', flashcard),
+        async (flashcard) => (
+          console.log("Saving flashcard:", flashcard),
           await prisma.flashcards.create({
             data: {
               question: flashcard.question,
@@ -47,9 +58,9 @@ export const saveDeck = async ({ title, description, visibility, flashcards, fol
               deckid: deck.id,
             },
           })
-         )
+        )
       )
-    )
+    );
   } catch (error: any) {
     console.log("Getting current saving deck" + error.message);
   }
@@ -118,6 +129,85 @@ export const getDecks = async () => {
     return folders;
   } catch (error: any) {
     console.log("Error fetching folders" + error.message);
+    return [];
+  }
+};
+
+export const deleteDeck = async (id: string) => {
+  try {
+     await prisma.folders.delete({
+      where: {
+        id
+      }
+    });
+  } catch (error: any) {
+    console.log("Error fetching folders" + error.message);
+  }
+};
+
+
+export const getPopularDecks = async () => {
+  try {
+    const decks: DeckProps[] = await prisma.decks.findMany({
+      where: {
+        visibility: visibility.PUBLIC,
+      },
+      select: {
+        id: true,
+        title: true,
+        userid: true,
+        folderid: true,
+        visibility: true,
+        createdat: true,
+        description: true,
+        flashcards: true,
+        additionalusers: true,
+        user: {
+          select: {
+            id: true,
+            email: true,
+            avatar: true,
+            joinedat: true,
+            username: true,
+            saveddecks: true,
+          },
+        },
+      },
+    });
+    return decks;
+  } catch (error: any) {
+    console.log("Error getting popular decks" + error.message);
+    return [];
+  }
+};
+
+export const addDeck = async (id: string) => {
+  try {
+    const user = await getCurrentUser();
+
+    await prisma.decks.update({
+      where: {
+        id,
+      },
+      data: {
+        additionalusers: {
+          push: user?.id!,
+        },
+      },
+    });
+
+    await prisma.users.update({
+      where: {
+        id: user?.id!,
+      },
+      data: {
+        saveddecks: {
+          push: id,
+        },
+      },
+    });
+  } catch (error: any) {
+    console.log("Error adding decks" + error.message);
     return [];
   }
 };

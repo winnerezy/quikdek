@@ -33,6 +33,7 @@ type User = {
     email: string
     avatar: string | null
     joinedat: Date
+    saveddecks: string[]
 }
 
 type Folder = {
@@ -53,4 +54,5 @@ type DeckProps = {
     visibility: visibility
     flashcards: FlashCardData[]
     user?: User
+    additionalusers?: String[]
 }

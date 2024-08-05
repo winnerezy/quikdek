@@ -4,6 +4,7 @@ import { createFolder } from "@/lib/actions";
 import { closeNewFolderModal } from "@/lib/redux/newFolderSlice";
 import { AppDispatch } from "@/lib/redux/store";
 import { fetchFolders } from "@/lib/redux/thunk";
+import { State } from "@/types";
 import { Input } from "@headlessui/react";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
@@ -46,6 +47,8 @@ export const NewFolderModal = () => {
           position: "relative",
           marginRight: 2,
           marginLeft: 2,
+          borderColor: "var(--border}",
+          borderWidth: 2
         }}
       >
         <h4 className="font-bold text-3xl absolute top-8 left-20 text-[--purple]">

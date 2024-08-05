@@ -6,8 +6,7 @@ export default function CreateDeck() {
 
   return (
 
-    <section className="w-full min-h-screen flex flex-col gap-6 p-4">
-      <Header />
+    <section className="w-full min-h-screen flex flex-col gap-6">
      <DeckForm/>
     </section>
   )

@@ -1,12 +1,34 @@
 "use client";
 
 import { Button } from "@headlessui/react";
-import { motion } from "framer-motion";
 import { useState } from "react";
 import { FlashCard } from "./FlashCard";
 import { FlashCardData } from "@/types";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu";
+import { addDeck, deleteDeck } from "@/lib/actions";
+import { useRouter } from "next/navigation";
 
-export const DeckDocker = ({ flashcards }: { flashcards: FlashCardData[] }) => {
+export const DeckDocker = ({
+  id,
+  additionalusers,
+  flashcards,
+  userid,
+  authorid,
+}: {
+  id: string;
+  additionalusers: string[] | undefined;
+  flashcards: FlashCardData[];
+  userid: string;
+  authorid: string;
+}) => {
+
+  const router = useRouter()
+
   const [current, setCurrent] = useState<number>(0);
 
   const handlePrevious = () => {
@@ -17,6 +39,10 @@ export const DeckDocker = ({ flashcards }: { flashcards: FlashCardData[] }) => {
     setCurrent((prevIndex) => (prevIndex + 1) % flashcards.length);
   };
 
+  const handleDelete = async (id: string) => {
+    await deleteDeck(id)
+    router.push('/my-decks')
+  }
   return (
     <section className="w-full flex flex-col gap-6 self-center">
       {flashcards.length > 0 && (
@@ -38,6 +64,29 @@ export const DeckDocker = ({ flashcards }: { flashcards: FlashCardData[] }) => {
         >
           Next
         </Button>
+        <DropdownMenu>
+          <DropdownMenuTrigger>
+            <Button className="btn w-36 bg-transparent border-2 border-[--light-purple] hover:bg-transparent">
+              More
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="border-none bg-[--background]">
+          {userid !== authorid && (
+          <DropdownMenuItem onClick={async () => await addDeck(id)}>
+              {additionalusers?.includes(userid) ? "Remove" : "Add"}
+            </DropdownMenuItem>
+                   )}
+            {userid === authorid && (
+              <>
+
+                <DropdownMenuItem >Edit</DropdownMenuItem>
+                <DropdownMenuItem className="text-red-500" onClick={() => handleDelete(id)}>
+                  Delete
+                </DropdownMenuItem>
+              </>
+            )}
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
     </section>
   );

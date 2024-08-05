@@ -7,7 +7,6 @@ import { DeckCard } from "./DeckCard";
 import { useEffect, useState } from "react";
 import { getDecks } from "@/lib/actions";
 import { Folder } from "@/types";
-import { Skeleton } from "@mui/material";
 
 export const MyFolders = () => {
   const [folders, setFolders] = useState<Folder[]>([]);

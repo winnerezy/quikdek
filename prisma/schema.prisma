@@ -15,6 +15,7 @@ model Users {
   folders    Folders[]
   decks      Decks[]
   flashcards Flashcards[]
+  saveddecks  String[]
   joinedat   DateTime     @default(now())
   plan       Plan         @default(FREE)
 
@@ -27,27 +28,28 @@ enum Plan {
 }
 
 model Folders {
-  id         String   @id @unique @default(uuid())
-  name       String
-  userid     String
-  user       Users    @relation(fields: [userid], references: [id])
-  decks      Decks[]
+  id        String   @id @unique @default(uuid())
+  name      String
+  userid    String
+  user      Users    @relation(fields: [userid], references: [id])
+  decks     Decks[]
   createdat DateTime @default(now())
 
   @@map("folders")
 }
 
 model Decks {
-  id          String       @id @unique @default(uuid())
-  title       String
-  description String?
-  visibility  visibility   @default(PUBLIC)
-  userid      String
-  user        Users        @relation(fields: [userid], references: [id])
-  folderid    String
-  folder      Folders      @relation(fields: [folderid], references: [id])
-  createdat   DateTime     @default(now())
-  flashcards  Flashcards[]
+  id              String       @id @unique @default(uuid())
+  title           String
+  description     String?
+  visibility      visibility   @default(PUBLIC)
+  userid          String
+  user            Users        @relation(fields: [userid], references: [id])
+  folderid        String
+  additionalusers String[]
+  folder          Folders      @relation(fields: [folderid], references: [id])
+  createdat       DateTime     @default(now())
+  flashcards      Flashcards[]
 
   @@map("decks")
 }
@@ -69,4 +71,3 @@ model Flashcards {
 
   @@map("flashcards")
 }
-

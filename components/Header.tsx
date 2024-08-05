@@ -52,7 +52,7 @@ export const Header = () => {
   };
 
   return (
-    <header className="flex items-center h-14 sticky top-0 gap-4 justify-between z-40 bg-[--background] text-[--purple]">
+    <header className="flex items-center h-16 sticky px-4 top-0 gap-4 justify-between z-40 bg-[--background] text-[--purple]">
       <div className="w-min h-14 flex gap-4 items-center">
         <BiMenu
           className="size-8 text-[--purple] block lg:hidden cursor-pointer"

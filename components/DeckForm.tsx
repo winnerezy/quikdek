@@ -127,7 +127,7 @@ export const DeckForm = () => {
             <SelectTrigger className="w-[180px] border border-[--light-purple]">
               <SelectValue placeholder="Select a folder"/>
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="border-none bg-[--background]">
               <SelectGroup>
                 {
                   folders.map((folder) =>  <SelectItem value={ folder.id }>{ folder.name }</SelectItem> )

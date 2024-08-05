@@ -13,7 +13,7 @@ export const FlashCard = ({
   return (
     <motion.div
     onClick={() => setIsFlipped(!isFlipped)}
-    className="self-center relative mt-24 w-full shadow-md max-w-[700px] h-[300px] p-2 flex items-center justify-center bg-[--card] font-bold text-center"
+    className="self-center relative mt-24 w-full shadow-md max-w-[700px] h-[300px] p-2 flex items-center justify-center bg-[--card] font-bold text-center rounded-lg"
     animate={{
       rotateX: isFlipped ? 180 : 0,
     }}

@@ -40,7 +40,7 @@ export const Sidebar = () => {
   return (
     <aside
       className={cn(
-        "w-[300px] flex min-h-screen max-lg:absolute top-0 left-0 z-50 bg-[--background] flex-col items-center gap-10 cursor-pointer duration-300 ease-in-out lg:sticky ",
+        "w-[300px] flex h-full max-lg:absolute top-16 left-0 z-50 bg-[--background] flex-col items-center gap-10 cursor-pointer duration-300 ease-in-out lg:sticky ",
         isOpen ? "max-lg:translate-x-0" : "max-lg:-translate-x-[300px]"
       )}
       ref={sidebarRef}
@@ -51,7 +51,7 @@ export const Sidebar = () => {
       />
       <Link
         href={"/home"}
-        className="relative flex gap-4 mt-36 w-48 h-10 rounded-lg hover:bg-[--hover] items-center"
+        className="relative flex gap-4 mt-16 w-48 h-10 rounded-lg hover:bg-[--hover] items-center"
       >
         <GoHome className="size-8 absolute left-2" />
         <p className="text-xl tracking-wide ml-16">Home</p>
