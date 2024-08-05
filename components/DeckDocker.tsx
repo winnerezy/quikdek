@@ -10,7 +10,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
-import { addDeck, deleteDeck } from "@/lib/actions";
+import { addDeck, deleteDeck, getDecks } from "@/lib/actions";
 import { useRouter } from "next/navigation";
 
 export const DeckDocker = ({
@@ -26,8 +26,7 @@ export const DeckDocker = ({
   userid: string;
   authorid: string;
 }) => {
-
-  const router = useRouter()
+  const router = useRouter();
 
   const [current, setCurrent] = useState<number>(0);
 
@@ -39,10 +38,15 @@ export const DeckDocker = ({
     setCurrent((prevIndex) => (prevIndex + 1) % flashcards.length);
   };
 
+  const handleAdd = async (id: string) => {
+    await addDeck(id);
+    await getDecks();
+  };
+
   const handleDelete = async (id: string) => {
-    await deleteDeck(id)
-    router.push('/my-decks')
-  }
+    await deleteDeck(id);
+    router.push("/my-decks");
+  };
   return (
     <section className="w-full flex flex-col gap-6 self-center">
       {flashcards.length > 0 && (
@@ -52,35 +56,35 @@ export const DeckDocker = ({
         />
       )}
       <div className="flex gap-4 self-center">
-        <Button
-          className="btn w-36 bg-[--light-purple] border-none text-white hover:bg-[--light-purple]"
+      <Button className="btn w-24 h-10 sm:w-36 bg-transparent border-2 border-[--light-purple] hover:bg-transparent"
           onClick={handlePrevious}
         >
           Previous
         </Button>
-        <Button
-          className="btn w-36 bg-[--light-purple] border-none text-white hover:bg-[--light-purple]"
+  <Button className="btn w-24 h-10 sm:w-36 bg-transparent border-2 border-[--light-purple] hover:bg-transparent"
           onClick={handleNext}
         >
           Next
         </Button>
         <DropdownMenu>
-          <DropdownMenuTrigger>
-            <Button className="btn w-36 bg-transparent border-2 border-[--light-purple] hover:bg-transparent">
+          <DropdownMenuTrigger className="outline-none">
+            <Button className="btn w-24 h-10 sm:w-36 bg-transparent border-2 border-[--light-purple] hover:bg-transparent">
               More
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="border-none bg-[--background]">
-          {userid !== authorid && (
-          <DropdownMenuItem onClick={async () => await addDeck(id)}>
-              {additionalusers?.includes(userid) ? "Remove" : "Add"}
-            </DropdownMenuItem>
-                   )}
+            {userid !== authorid && (
+              <DropdownMenuItem onClick={() => handleAdd(id)}>
+                {additionalusers?.includes(userid) ? "Remove" : "Add"}
+              </DropdownMenuItem>
+            )}
             {userid === authorid && (
               <>
-
-                <DropdownMenuItem >Edit</DropdownMenuItem>
-                <DropdownMenuItem className="text-red-500" onClick={() => handleDelete(id)}>
+                <DropdownMenuItem>Edit</DropdownMenuItem>
+                <DropdownMenuItem
+                  className="text-red-500"
+                  onClick={() => handleDelete(id)}
+                >
                   Delete
                 </DropdownMenuItem>
               </>

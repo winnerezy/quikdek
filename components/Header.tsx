@@ -65,7 +65,7 @@ export const Header = () => {
       <SearchInput />
       <div className="h-14 flex gap-4 items-center">
         <DropdownMenu>
-          <DropdownMenuTrigger>
+          <DropdownMenuTrigger className="outline-none">
             <CiSquarePlus className="size-8 text-[--purple]" />
           </DropdownMenuTrigger>
           <DropdownMenuContent className="border-none space-y-2 mr-4 p-2 w-[200px] bg-[--background] text-[--text-2]">
@@ -85,7 +85,7 @@ export const Header = () => {
         </DropdownMenu>
 
         <DropdownMenu>
-          <DropdownMenuTrigger className="rounded-full">
+          <DropdownMenuTrigger className="rounded-full outline-none">
             <Image
               src={user?.avatar!}
               width={40}

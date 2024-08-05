@@ -24,7 +24,7 @@ export default function RootLayout({
     <Provider store={store}>
      <div className="w-full relative flex flex-col min-h-screen">
       <Header/>
-     <section className="w-full flex min-h-screen">
+     <section className="w-full flex">
         <Sidebar />
         <main className="flex flex-col w-full min-h-screen px-4">
           {children}
