@@ -28,8 +28,8 @@ body {
 
 @layer base {
   :root {
-    --background: #fdfdfd;
-    --card: #f9f9f9;
+    --background: #f9f9f9;
+    --card: #fdfdfd;
     --purple: #5200d5;
     --hover: #9318ff;
     --text-2: #000000;
@@ -70,12 +70,12 @@ body {
     --card: #291444;
     --purple: #7700d8;
     --hover: #7306d3;
-    --text-2: #ffffff;
+    --text-2: #d4d4d4;
     --text-card: #ffffff;
     --border: #271731;
-    --text: #ffffff;
+    --text: #d4d4d4;
     --input-text: #ffffff;
-    --text-card: #ffffff;
+    --text-card: #d4d4d4;
     --card-foreground: 210 40% 98%;
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;

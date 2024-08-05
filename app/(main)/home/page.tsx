@@ -9,7 +9,7 @@ export default function Home() {
       <Header/>
       <div className="max-w-7xl flex flex-col w-full gap-4 self-center max-md:mt-14">
         <p className="text-2xl text-[--purple]">Recents</p>
-        <MyFolders/>
+        <RecentDecks/>
       </div>
       <div className="max-w-7xl flex flex-col w-full gap-4 self-center">
         <p className="text-2xl text-[--purple]">Popular Decks</p>

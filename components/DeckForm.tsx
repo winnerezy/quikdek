@@ -19,14 +19,17 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { FlashCardData, State } from "@/types";
+import { visibility } from "@prisma/client";
+import { useRouter } from "next/navigation";
 
 export const DeckForm = () => {
   const dispatch = useDispatch<AppDispatch>();
 
+  const router = useRouter()
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [folder, setFolder] = useState<string>("")
-  // const [visible, setVisible] = useState<visibility>(visibility.PUBLIC)
+  const [visible, setVisible] = useState<visibility>(visibility.PUBLIC)
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const [flashcards, setFlashCards] = useState<FlashCardData[]>([
@@ -64,10 +67,10 @@ export const DeckForm = () => {
 
   const folders = useSelector((state: State) => state.folder.folders);
 
-  // const visibilityOptions = [
-  //   { value: visibility.PUBLIC, label: 'Public' },
-  //   { value: visibility.PRIVATE, label: 'Private' }
-  // ]
+  const visibilityOptions = [
+    { value: visibility.PUBLIC, label: 'Public' },
+    { value: visibility.PRIVATE, label: 'Private' }
+  ]
 
   const handleSave = async () => {
     try {
@@ -76,15 +79,17 @@ export const DeckForm = () => {
         title,
         description,
         flashcards,
+        visibility: visible,
         folderid: folder
       });
-      redirect("/my-decks");
+      router.push("/my-decks");
     } catch (error: any) {
       console.log(error.message);
     } finally {
       setIsLoading(false);
     }
   };
+
 
   return (
     <section className="w-full flex flex-col gap-6 text-[--text-2]">
@@ -117,7 +122,7 @@ export const DeckForm = () => {
             setDescription(e.target.value)
           }
         />
-        <section className="self-start space-x-4">
+        <section className="self-start space-x-4 flex items-center">
           <Select onValueChange={(e) => setFolder(e)}>
             <SelectTrigger className="w-[180px] border border-[--light-purple]">
               <SelectValue placeholder="Select a folder"/>
@@ -131,11 +136,19 @@ export const DeckForm = () => {
               </SelectGroup>
             </SelectContent>
           </Select>
-          {/* <Select className="w-48 border border-[--purple] rounded-lg focus:outline-none text-[--purple]"
-            options={visibilityOptions}
-            defaultValue={visibilityOptions[0]}
-            onChange={(e) => setVisible(e?.value!)}
-          /> */}
+          <Select onValueChange={(e: visibility) => setVisible(e)}>
+            <SelectTrigger className="w-[180px] border border-[--light-purple]">
+              <SelectValue placeholder="Public"/>
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                {
+                  visibilityOptions.map((option) =>  <SelectItem value={ option.value }>{ option.label }</SelectItem> )
+                }
+
+              </SelectGroup>
+            </SelectContent>
+          </Select>
         </section>
       </div>
       <div className="flex flex-col gap-6 max-w-[1000px] w-full self-center">

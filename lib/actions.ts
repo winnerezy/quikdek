@@ -3,6 +3,7 @@
 import { auth, signOut } from "@/auth";
 import { prisma } from "./prisma";
 import { DeckProps, FlashCardData, Folder } from "@/types";
+import { visibility } from "@prisma/client";
 
 export const getCurrentUser = async () => {
   try {
@@ -19,28 +20,36 @@ export const getCurrentUser = async () => {
   }
 };
 
-export const saveDeck = async ({ title, description, flashcards, folderid  }: { title: string, description: string | null, flashcards: FlashCardData[], folderid: string }) => {
+export const saveDeck = async ({ title, description, visibility, flashcards, folderid  }: { title: string, description: string | null, visibility: visibility, flashcards: FlashCardData[], folderid: string }) => {
   try {
     const user = await getCurrentUser();
+  
     const deck = await prisma.decks.create({
       data: {
         title,
         description,
         userid: user?.id!,
-        folderid,
+        visibility,
+        folderid
       },
     });
-    flashcards.map(
-      async (flashcard) =>
-        await prisma.flashcards.create({
-          data: {
-            question: flashcard.question,
-            answer: flashcard.answer,
-            userid: user?.id!,
-            deckid: deck.id,
-          },
-        })
-    );
+    // saving all the flash cards individually
+    await Promise.all(
+      flashcards.map(
+        async (flashcard) =>
+         (
+          console.log('Saving flashcard:', flashcard),
+          await prisma.flashcards.create({
+            data: {
+              question: flashcard.question,
+              answer: flashcard.answer,
+              userid: user?.id!,
+              deckid: deck.id,
+            },
+          })
+         )
+      )
+    )
   } catch (error: any) {
     console.log("Getting current saving deck" + error.message);
   }

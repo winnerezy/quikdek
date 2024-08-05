@@ -8,7 +8,7 @@ export default function SignIn() {
       <form
         action={async () => {
           "use server";
-          await signIn();
+          await signIn("github");
         }}
         className="relative w-[450px] h-[500px] border-2 border-[--purple] p-2 flex flex-col items-center justify-center space-y-6 rounded-lg"
       >

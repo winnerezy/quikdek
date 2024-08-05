@@ -21,10 +21,10 @@ export const MyFolders = () => {
   }, []);
 
   return (
-    <div className="max-w-7xl flex flex-col w-full gap-4 self-center">
+    <div className="max-w-7xl flex flex-col w-full gap-8 self-center">
       {folders.map((folder) => (
         <div key={folder.id} className="flex flex-col gap-4 ">
-          <p className="text-2xl text-[--purple]">{folder.name}</p>
+          <p className="text-2xl text-[--text] font-semibold">{folder.name} Folder</p>
           <Swiper
             spaceBetween={50}
             breakpoints={{
@@ -32,18 +32,15 @@ export const MyFolders = () => {
                 slidesPerView: 1.3,
               },
               640: {
-                slidesPerView: 2,
+                slidesPerView: 2.5,
               },
               1024: {
-                slidesPerView: 2,
+                slidesPerView: 3.5,
               },
             }}
             className="max-w-screen-xl w-full"
           >
-            {!folder.decks ?
-             Array(3).fill(3).map((_, i)=> <Skeleton/>)
-             :
-             folder.decks?.map((deck) => (
+            {folder.decks?.map((deck) => (
               <SwiperSlide key={deck.id}>
                 <DeckCard
                   id={deck.id}
