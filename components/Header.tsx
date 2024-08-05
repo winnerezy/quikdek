@@ -10,7 +10,7 @@ import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
 import { getCurrentUser, handleSignOut } from "@/lib/actions";
 import { CgFolderAdd, CgProfile } from "react-icons/cg";
-import { TbCards, TbSun, TbTrophy } from "react-icons/tb";
+import { TbCards, TbMoon, TbSun, TbTrophy } from "react-icons/tb";
 import { LuLogOut } from "react-icons/lu";
 import {
   DropdownMenu,
@@ -21,9 +21,14 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import { openNewFolderModal } from "@/lib/redux/newFolderSlice";
+import { User } from "@/types";
 
 export const Header = () => {
   const [user, setUser] = useState<User | null>(null);
+  const [theme, setTheme] = useState<string>(() => {
+    const existingTheme = localStorage.getItem("theme");
+    return existingTheme ? existingTheme : "light";
+  });
 
   const fetchUser = useCallback(async () => {
     const currentUser = await getCurrentUser();
@@ -36,47 +41,48 @@ export const Header = () => {
 
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    document.documentElement.setAttribute("class", theme);
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+
+  const handleTheme = () => {
+    setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
+    localStorage.setItem("theme", theme);
+  };
+
   return (
-    <header className="flex items-center h-14 sticky top-0 gap-4 justify-between z-40 bg-[--background] lg:ml-[250px]">
+    <header className="flex items-center h-14 sticky top-0 gap-4 justify-between z-40 bg-[--background] text-[--purple]">
       <div className="w-min h-14 flex gap-4 items-center">
         <BiMenu
-          className="size-8 text-[--blue] block md:hidden cursor-pointer"
+          className="size-8 text-[--purple] block lg:hidden cursor-pointer"
           onClick={() => dispatch(openSideBar())}
         />
-        <Link
-          href={"/home"}
-          className="text-[--blue] font-bold text-2xl tracking-wide w-36"
-        >
+        <Link href={"/home"} className="font-bold text-2xl tracking-wide w-36">
           Quick Deck
         </Link>
       </div>
       <SearchInput />
       <div className="h-14 flex gap-4 items-center">
-      <DropdownMenu>
+        <DropdownMenu>
           <DropdownMenuTrigger>
-          <CiSquarePlus className="size-8 text-[--blue]" />
+            <CiSquarePlus className="size-8 text-[--purple]" />
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="border-none space-y-2 mr-4 p-2 w-[200px]">
-           
+          <DropdownMenuContent className="border-none space-y-2 mr-4 p-2 w-[200px] bg-[--background] text-[--text-2]">
             <DropdownMenuItem onClick={() => dispatch(openNewFolderModal())}>
-              <div 
-              className="text-md font-semibold flex gap-4 items-center">
-               
-               <CgFolderAdd/>
+              <div className="text-md font-semibold flex gap-4 items-center">
+                <CgFolderAdd />
                 <p>Create Folder</p>
               </div>
             </DropdownMenuItem>
             <DropdownMenuItem>
               <div className="text-md font-semibold flex gap-4 items-center">
-               
-               <TbCards/>
+                <TbCards />
                 <p>Create Deck</p>
               </div>
             </DropdownMenuItem>
-
           </DropdownMenuContent>
         </DropdownMenu>
-       
 
         <DropdownMenu>
           <DropdownMenuTrigger className="rounded-full">
@@ -88,7 +94,7 @@ export const Header = () => {
               className="rounded-full"
             />
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="border-none h-[300px] space-y-2 mr-4 p-2 w-[300px]">
+          <DropdownMenuContent className="border-none h-[300px] space-y-2 mr-4 p-2 w-[300px] bg-[--background] text-[--text-2]">
             <DropdownMenuLabel>
               <div className="w-full flex gap-2 items-center">
                 <div className="avatar">
@@ -97,7 +103,7 @@ export const Header = () => {
                       src={user?.avatar!}
                       width={20}
                       height={20}
-                      alt={ user?.username! }
+                      alt={user?.username!}
                     />
                   </div>
                 </div>
@@ -132,13 +138,18 @@ export const Header = () => {
                 <p className="font-semibold">Settings</p>
               </Link>
             </DropdownMenuItem>
-            <DropdownMenuItem>
-              <div
-                className="text-md font-semibold flex gap-4 items-center"
-              >
-                <TbSun />
-                <p className="font-semibold">Light Mode</p>
-              </div>
+            <DropdownMenuItem onClick={handleTheme}>
+              {theme === "light" ? (
+                <div className="text-md font-semibold flex gap-4 items-center">
+                  <TbMoon />
+                  <p className="font-semibold">Dark Mode</p>
+                </div>
+              ) : (
+                <div className="text-md font-semibold flex gap-4 items-center">
+                  <TbSun />
+                  <p className="font-semibold">Light Mode</p>
+                </div>
+              )}
             </DropdownMenuItem>
             <DropdownMenuItem>
               <button

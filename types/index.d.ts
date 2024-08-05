@@ -1,3 +1,5 @@
+import { visibility } from "@prisma/client"
+
 type State = {
     sidebar: sidebar
     newfoldermodal: newfoldermodal,
@@ -19,8 +21,8 @@ type FolderState = {
 }
 
 
-interface FlashCardData {
-    id: number
+type FlashCardData = {
+    id: string
     question: string
     answer: string
   }
@@ -37,17 +39,18 @@ type Folder = {
     id: string
     name: string
     userid: string
-    createdat: Date
-}
-type DeckProps = {
-    title: string
-    description: string | null
-    folderid: string
-    // visibility: visibility
-    flashcards: FlashCardData[]
+    createdat: Date,
+    decks?: DeckProps[]
 }
 
-enum visibility {
-    PUBLIC = 'PUBLIC',
-    PRIVATE = 'PRIVATE'
+type DeckProps = {
+    id: string
+    title: string
+    description: string | null
+    userid: string;
+    folderid: string;
+    createdat: Date;
+    visibility: visibility
+    flashcards: FlashCardData[]
+    user?: User
 }

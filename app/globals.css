@@ -2,12 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
-/* 
-@media (prefers-color-scheme: dark) {
+
+/* @media (prefers-color-scheme: dark) {
   :root {
-    --background: #010104;
-    --blue: #0600C2;
-    --hover: #0d00ff;
+    --background: #030104;
+    --card: #291444;
+    --purple: #7700d8;
+    --hover: #7306d3;
+    --text-2: #ffffff;
+    --text-card: #ffffff;
+    --border: #271731;
   }
 } */
 
@@ -24,14 +28,19 @@ body {
 
 @layer base {
   :root {
-    --background: #FBFBFE;
-    --blue: #443DFF;
-    --text: #ffffff;
-    --light-blue: #9498FF;
+    --background: #fdfdfd;
+    --card: #f9f9f9;
+    --purple: #5200d5;
+    --hover: #9318ff;
+    --text-2: #000000;
+    --text-card: #ffffff;
+    --border: #f9f9f9;
+    --text: #000000;
+    --text-card: #5a5a5a;
+    --light-purple: #911ee8;
     --hover: #EBEAFF;
     --input-text: #000000;
     --foreground: 222.2 84% 4.9%;
-    --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
@@ -45,7 +54,6 @@ body {
     --accent-foreground: 222.2 47.4% 11.2%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
     --ring: 222.2 84% 4.9%;
     --radius: 0.5rem;
@@ -57,9 +65,17 @@ body {
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
+    --background: #030104;
+    --card: #291444;
+    --purple: #7700d8;
+    --hover: #7306d3;
+    --text-2: #ffffff;
+    --text-card: #ffffff;
+    --border: #271731;
+    --text: #ffffff;
+    --input-text: #ffffff;
+    --text-card: #ffffff;
     --card-foreground: 210 40% 98%;
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
@@ -73,7 +89,6 @@ body {
     --accent-foreground: 210 40% 98%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
     --chart-1: 220 70% 50%;
@@ -91,4 +106,18 @@ body {
   body {
     @apply bg-background text-foreground;
   }
+}
+
+.flashcard {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  border-radius: 10px;
+  text-align: center;
+  background-color: var(--card);
 }

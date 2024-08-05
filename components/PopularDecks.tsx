@@ -4,6 +4,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 
 import "swiper/css";
 import { DeckCard } from "./DeckCard";
+import { PopularDeckCard } from "./PopularDeckCard";
 
 export const PopularDecks = () => {
   return (
@@ -17,7 +18,7 @@ export const PopularDecks = () => {
         slidesPerView: 3
       },
       1024: {
-        slidesPerView: 3.3
+        slidesPerView: 3
       }
     }}
     className="max-w-7xl w-full">
@@ -25,7 +26,7 @@ export const PopularDecks = () => {
         .fill(null)
         .map((_, index) => (
           <SwiperSlide key={index}>
-            <DeckCard />
+            <PopularDeckCard />
           </SwiperSlide>
         ))}
     </Swiper>

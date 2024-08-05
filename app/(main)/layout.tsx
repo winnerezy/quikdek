@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
@@ -20,20 +20,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-   <Provider store={store}>
-     <html lang="en">
-      <body className={roboto.className}>
-        <section className="w-full flex relative">
-            <Sidebar />
-          <main className="flex flex-col w-full min-h-screen">
-            {children}
+    <Provider store={store}>
+      <section className="w-full flex relative">
+        <Sidebar />
+        <main className="flex flex-col w-full min-h-screen">
+          {children}
           <Footer />
-         
-          </main>
-        </section>
-          <NewFolderModal/>
-      </body>
-    </html>
-   </Provider>
+        </main>
+      </section>
+      <NewFolderModal />
+    </Provider>
   );
 }

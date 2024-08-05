@@ -35,8 +35,8 @@ export const NewFolderModal = () => {
         sx={{
           width: 800,
           height: 300,
-          backgroundColor: "white",
-          color: "black",
+          backgroundColor: "var(--background)",
+          color: "var(--text-2)",
           borderRadius: 5,
           display: "flex",
           flexDirection: "column",
@@ -48,18 +48,18 @@ export const NewFolderModal = () => {
           marginLeft: 2,
         }}
       >
-        <h4 className="font-bold text-3xl absolute top-8 left-20 text-[--blue]">
+        <h4 className="font-bold text-3xl absolute top-8 left-20 text-[--purple]">
           Create New Folder
         </h4>
         <Input
-          className="outline-none w-full py-4 border-b-4 border-[--blue] text-[--input-text] placeholder:text-gray-300 bg-transparent"
+          className="outline-none w-full py-4 border-b-2 border-[--purple] text-[--input-text] placeholder:text-gray-300 bg-transparent"
           placeholder="Enter folder name"
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             setName(e.target.value)
           }
         />
         <button
-          className="bg-[--blue] w-24 h-10 rounded-lg self-end p-2 absolute right-20 bottom-8 text-white"
+          className="bg-[--purple] w-24 h-10 rounded-lg self-end p-2 absolute right-20 bottom-8 text-white"
           onClick={handleFolder}
           disabled={isLoading}
         >
