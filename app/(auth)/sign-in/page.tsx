@@ -12,6 +12,10 @@ export default function SignIn() {
         <button
           type="submit"
           className="btn w-3/4 bg-[--purple] hover:bg-[--purple] text-white"
+          formAction={async () => {
+            "use server";
+            await signIn("google");
+          }}
         >
           <FcGoogle size={25} />
           <p>Sign In with Google</p>
