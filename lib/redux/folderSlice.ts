@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { fetchFolders } from "./thunk";
+import { Folder, FolderState } from "@/types";
 
 const initialState: FolderState = {
     folders: [] as Folder[],
