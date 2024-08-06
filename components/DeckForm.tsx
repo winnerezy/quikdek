@@ -165,7 +165,7 @@ export const DeckForm = () => {
           />
         ))}
         <button
-          className="btn border border-[--purple] bg-transparent"
+          className="btn border border-[--purple] hover:border-[--purple] bg-transparent hover:bg-transparent"
           onClick={handleNewFlashCard}
         >
           <BiPlus className="size-8 text-[--purple]" />
