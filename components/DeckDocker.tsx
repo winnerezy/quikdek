@@ -67,7 +67,7 @@ export const DeckDocker = ({
           Previous
         </Button>
         <Button
-          className="btn w-24 h-10 sm:w-36 text-foreground border-2 border-border-purple hover:border-border-purple bg-background hover:bg-background"
+          className="btn w-24 h-10 sm:w-36 text-foreground disabled:text-foreground border-2 border-border-purple hover:border-border-purple bg-background hover:bg-background"
           onClick={handleNext}
           disabled={current + 1 === flashcards.length}
         >
