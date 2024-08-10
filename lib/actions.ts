@@ -4,6 +4,7 @@ import { auth, signOut } from "@/auth";
 import { prisma } from "./prisma";
 import { DeckProps, FlashCardData, Folder } from "@/types";
 import { visibility } from "@prisma/client";
+import { revalidatePath } from "next/cache";
 
 export const getCurrentUser = async () => {
   try {
@@ -206,6 +207,7 @@ export const addDeck = async (id: string) => {
         },
       },
     });
+    revalidatePath("/my-decks")
   } catch (error: any) {
     console.log("Error adding decks" + error.message);
     return [];

@@ -40,7 +40,7 @@ export const DeckDocker = ({
 
   const handleAdd = async (id: string) => {
     await addDeck(id);
-    await getDecks();
+    // await getDecks();
   };
 
   const handleDelete = async (id: string) => {
@@ -55,22 +55,29 @@ export const DeckDocker = ({
           answer={flashcards[current].answer}
         />
       )}
+      <p className="text-md font-bold text-center text-text-2">{`${
+        current + 1
+      } / ${flashcards.length}`}</p>
       <div className="flex gap-4 self-center">
-      <Button className="btn w-24 h-10 sm:w-36 bg-transparent border-2 border-[--light-purple] hover:bg-transparent"
+        <Button
+          className="btn w-24 h-10 sm:w-36 text-foreground disabled:text-foreground border-2 border-border-purple hover:border-border-purple bg-background hover:bg-background"
           onClick={handlePrevious}
+          disabled={current === 0}
         >
           Previous
         </Button>
-  <Button className="btn w-24 h-10 sm:w-36 bg-transparent border-2 border-[--light-purple] hover:bg-transparent"
+        <Button
+          className="btn w-24 h-10 sm:w-36 text-foreground border-2 border-border-purple hover:border-border-purple bg-background hover:bg-background"
           onClick={handleNext}
+          disabled={current + 1 === flashcards.length}
         >
           Next
         </Button>
         <DropdownMenu>
           <DropdownMenuTrigger className="outline-none">
-            <Button className="btn w-24 h-10 sm:w-36 bg-transparent border-2 border-[--light-purple] hover:bg-transparent">
+            <p className="btn w-24 h-10 sm:w-36 text-foreground border-2 border-border-purple hover:border-border-purple bg-background hover:bg-background">
               More
-            </Button>
+            </p>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="border-none bg-background">
             {userid !== authorid && (

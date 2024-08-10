@@ -40,7 +40,7 @@ body {
     --light-purple: #911ee8;
     --hover: #EBEAFF;
     --input-text: #000000;
-    --foreground: 222.2 84% 4.9%;
+    --foreground: #181818;
     --card-foreground: 222.2 84% 4.9%;
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
@@ -65,7 +65,7 @@ body {
   }
 
   .dark {
-    --foreground: 210 40% 98%;
+    --foreground: #f1f1f1;
     --background: #141414;
     --card: #291444;
     --purple: #7700d8;
@@ -76,6 +76,7 @@ body {
     --text: #d4d4d4;
     --input-text: #ffffff;
     --text-card: #d4d4d4;
+    --light-purple: #911ee8;
     --card-foreground: 210 40% 98%;
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
