@@ -27,7 +27,7 @@ export const NewFlashCard = ({
   }
 
   return (
-    <article className="relative max-w-[1000px] w-full h-60 rounded-lg bg-[--card] border-2 border-[--border] p-4">
+    <article className="relative max-w-[1000px] w-full h-60 rounded-lg bg-card border-2 border-[--border] p-4">
       <div className="w-full">
         <Input
           className="outline-none w-full bg-transparent py-4 border-b-2 border-[--purple] placeholder:text-gray-300"

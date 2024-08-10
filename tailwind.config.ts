@@ -21,8 +21,9 @@ const config = {
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
+        text: "var(--text)",
         ring: "hsl(var(--ring))",
-        background: "hsl(var(--background))",
+        background: "var(--background)",
         foreground: "hsl(var(--foreground))",
         primary: {
           DEFAULT: "hsl(var(--primary))",
@@ -49,7 +50,7 @@ const config = {
           foreground: "hsl(var(--popover-foreground))",
         },
         card: {
-          DEFAULT: "hsl(var(--card))",
+          DEFAULT: "var(--card)",
           foreground: "hsl(var(--card-foreground))",
         },
       },

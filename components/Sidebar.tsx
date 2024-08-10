@@ -40,7 +40,7 @@ export const Sidebar = () => {
   return (
     <aside
       className={cn(
-        "w-[250px] flex h-screen max-lg:absolute top-0 lg:top-16 left-0 z-50 bg-[--background] flex-col items-center gap-10 cursor-pointer duration-300 ease-in-out lg:fixed ",
+        "w-[250px] flex h-screen max-lg:absolute top-0 lg:top-16 left-0 z-50 bg-background flex-col items-center gap-10 cursor-pointer duration-300 ease-in-out lg:fixed ",
         isOpen ? "max-lg:translate-x-0" : "max-lg:-translate-x-[300px]"
       )}
       ref={sidebarRef}

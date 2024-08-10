@@ -72,7 +72,7 @@ export const DeckDocker = ({
               More
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="border-none bg-[--background]">
+          <DropdownMenuContent className="border-none bg-background">
             {userid !== authorid && (
               <DropdownMenuItem onClick={() => handleAdd(id)}>
                 {additionalusers?.includes(userid) ? "Remove" : "Add"}

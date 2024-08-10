@@ -49,7 +49,7 @@ export const Header = () => {
   };
 
   return (
-    <header className="flex items-center h-16 sticky px-4 top-0 gap-4 justify-between z-40 bg-[--background] text-[--purple]">
+    <header className="flex items-center h-16 sticky px-4 top-0 gap-4 justify-between z-40 bg-background text-[--purple]">
       <div className="w-min h-14 flex gap-4 items-center">
         <BiMenu
           className="size-8 text-[--purple] block lg:hidden cursor-pointer"
@@ -81,7 +81,7 @@ export const Header = () => {
           <DropdownMenuTrigger className="outline-none">
             <CiSquarePlus className="size-8 text-[--purple]" />
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="border-none space-y-2 mr-4 p-2 w-[200px] bg-[--background] text-[--text-2]">
+          <DropdownMenuContent className="border-none space-y-2 mr-4 p-2 w-[200px] bg-background text-[--text-2]">
             <DropdownMenuItem onClick={() => dispatch(openNewFolderModal())}>
               <div className="text-md font-semibold flex gap-4 items-center">
                 <CgFolderAdd />
@@ -107,7 +107,7 @@ export const Header = () => {
               className="rounded-full"
             />
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="border-none h-[300px] space-y-2 mr-4 p-2 w-[300px] bg-[--background] text-[--text-2]">
+          <DropdownMenuContent className="border-none h-[300px] space-y-2 mr-4 p-2 w-[300px] bg-background text-[--text-2]">
             <DropdownMenuLabel>
               <div className="w-full flex gap-2 items-center">
                 <div className="avatar">
