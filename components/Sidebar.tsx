@@ -40,7 +40,7 @@ export const Sidebar = () => {
   return (
     <aside
       className={cn(
-        "w-[300px] flex h-full max-lg:absolute top-0 lg:top-16 left-0 z-50 bg-[--background] flex-col items-center gap-10 cursor-pointer duration-300 ease-in-out lg:sticky ",
+        "w-[250px] flex h-screen max-lg:absolute top-0 lg:top-16 left-0 z-50 bg-[--background] flex-col items-center gap-10 cursor-pointer duration-300 ease-in-out lg:fixed ",
         isOpen ? "max-lg:translate-x-0" : "max-lg:-translate-x-[300px]"
       )}
       ref={sidebarRef}
@@ -51,39 +51,39 @@ export const Sidebar = () => {
       />
       <Link
         href={"/home"}
-        className="relative flex gap-4 mt-16 w-48 h-10 rounded-lg hover:bg-[--hover] items-center"
+        className="relative flex gap-2 mt-16 w-48 h-10 rounded-lg hover:bg-[--hover] items-center text-md"
       >
-        <GoHome className="size-8 absolute left-2" />
-        <p className="text-xl tracking-wide ml-16">Home</p>
+        <GoHome className="size-6 absolute left-2" />
+        <p className="tracking-wide ml-16">Home</p>
       </Link>
       <Link
         href={"/my-decks"}
-        className="relative flex gap-4 w-48 h-10 rounded-lg hover:bg-[--hover] items-center"
+        className="relative flex gap-4 w-48 h-10 rounded-lg hover:bg-[--hover] items-center text-md"
       >
-        <TbCards className="size-8 absolute left-2" />
-        <p className="text-xl tracking-wide ml-16">My Decks</p>
+        <TbCards className="size-6 absolute left-2" />
+        <p className="tracking-wide ml-16">My Decks</p>
       </Link>
       <Link
         href={"/notifications"}
-        className="relative flex gap-4 w-48 h-10 rounded-lg hover:bg-[--hover] items-center"
+        className="relative flex gap-4 w-48 h-10 rounded-lg hover:bg-[--hover] items-center text-md"
       >
-        <IoIosNotificationsOutline className="size-8 absolute left-2" />
-        <p className="text-xl tracking-wide ml-16">Notifications</p>
+        <IoIosNotificationsOutline className="size-6 absolute left-2" />
+        <p className="tracking-wide ml-16">Notifications</p>
       </Link>
       <hr className="w-[90%]" />
       <Link
         href={"/create-deck"}
-        className="relative flex gap-4 w-48 h-10 rounded-lg hover:bg-[--hover] items-center"
+        className="relative flex gap-4 w-48 h-10 rounded-lg hover:bg-[--hover] items-center text-md" 
       >
-        <IoCreateOutline className="size-8 absolute left-2" />
-        <p className="text-xl tracking-wide ml-16">Create Deck</p>
+        <IoCreateOutline className="size-6 absolute left-2" />
+        <p className="tracking-wide ml-16">Create Deck</p>
       </Link>
       <Link
         href={"/practice-quiz"}
-        className="relative flex gap-4 w-48 h-10 rounded-lg hover:bg-[--hover] items-center"
+        className="relative flex gap-4 w-48 h-10 rounded-lg hover:bg-[--hover] items-center text-md"
       >
-        <LuBookOpen className="size-8 absolute left-2" />
-        <p className="text-xl tracking-wide ml-16">Practice Quiz</p>
+        <LuBookOpen className="size-6 absolute left-2" />
+        <p className="tracking-wide ml-16">Practice Quiz</p>
       </Link>
     </aside>
   );
