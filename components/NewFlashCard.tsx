@@ -21,9 +21,12 @@ export const NewFlashCard = ({
     question: '',
     answer: ''
   })
+
+  // fix for a value behind the update
   const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
-    setCardData(prevData => ({...prevData, [e.target.name]: e.target.value}))
-    onUpdate({ question: cardData.question, answer: cardData.answer })
+    const newData = {...cardData, [e.target.name]: e.target.value};
+    setCardData(newData);
+    onUpdate(newData);
   }
 
   return (
@@ -31,12 +34,14 @@ export const NewFlashCard = ({
       <div className="w-full">
         <Input
           className="outline-none w-full bg-transparent py-4 border-b-2 border-[--purple] placeholder:text-gray-300"
+          value={cardData.question}
           placeholder="Add a question"
           name="question"
           onChange={(e) => handleInput(e)}
         />
         <Input
           className="outline-none w-full bg-transparent py-4 border-b-2 border-[--purple] placeholder:text-gray-300"
+          value={cardData.answer}
           placeholder="Add the answer"
           name="answer"
           onChange={(e) => handleInput(e)}

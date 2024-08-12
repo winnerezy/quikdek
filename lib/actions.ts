@@ -3,7 +3,7 @@
 import { auth, signOut } from "@/auth";
 import { prisma } from "./prisma";
 import { DeckProps, FlashCardData, Folder } from "@/types";
-import { visibility } from "@prisma/client";
+import { Decks, visibility } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 
 export const getCurrentUser = async () => {
@@ -131,6 +131,24 @@ export const getDecks = async () => {
   } catch (error: any) {
     console.log("Error fetching folders" + error.message);
     return [];
+  }
+};
+
+export const getDeck = async (deckId: string) => {
+  try {
+    const deck: DeckProps | null = await prisma.decks.findUnique({
+      where: {
+        id: deckId
+      },
+      include: {
+        flashcards: true,
+        user: true,
+      }
+    });
+    return deck;
+  } catch (error: any) {
+    console.log("Error fetching folders" + error.message);
+    return null;
   }
 };
 

@@ -1,10 +1,11 @@
 "use client";
 
 import { BiPlus } from "react-icons/bi";
-import { NewFlashCard } from "./NewFlashCard";
+import { NewFlashCard } from "@/components/NewFlashCard";
 import { ChangeEvent, useEffect, useState } from "react";
 import { Input, Textarea } from "@headlessui/react";
-import { saveDeck } from "@/lib/actions";
+import { getDeck, saveDeck } from "@/lib/actions";
+import { redirect } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "@/lib/redux/store";
 import { fetchFolders } from "@/lib/redux/thunk";
@@ -13,61 +14,60 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
+  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { FlashCardData, State } from "@/types";
-import { visibility } from "@prisma/client";
+import { DeckProps, FlashCardData, State } from "@/types";
+import { Decks, visibility } from "@prisma/client";
 import { useRouter } from "next/navigation";
-import { useToast } from "./ui/use-toast";
 
-export const DeckForm = () => {
+export default function EditDeck({params: {deckId}}: {params: {deckId: string}}) {
+
+  const [deck, setDeck] = useState<DeckProps | null>(null)
+    useEffect(()=> {
+        async function fetchDeck() {
+            const res = await getDeck(deckId);
+            setDeck(res)
+        }
+        fetchDeck()
+    }, [])
   const dispatch = useDispatch<AppDispatch>();
 
-  const { toast } = useToast();
-
   const router = useRouter();
-  const [title, setTitle] = useState<string>("");
-  const [description, setDescription] = useState<string>("");
-  const [folder, setFolder] = useState<string>("");
-  const [visible, setVisible] = useState<visibility>(visibility.PUBLIC);
+  const [title, setTitle] = useState<string | undefined>(deck?.title);
+  const [description, setDescription] = useState<string | null | undefined>(deck?.description)
+  const [folder, setFolder] = useState<string | undefined>(deck?.folderid);
+  const [visible, setVisible] = useState<visibility>(deck?.visibility!);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const [flashcards, setFlashCards] = useState<FlashCardData[]>([
-    { id: "1", question: "", answer: "" },
-    { id: "2", question: "", answer: "" },
-    { id: "3", question: "", answer: "" },
-  ]);
+  const [flashcards, setFlashCards] = useState<FlashCardData[] | undefined>(deck?.flashcards);
 
   const handleNewFlashCard = () => {
-    const newId = (
-      flashcards.length
-        ? Math.max(...flashcards.map((fc) => parseInt(fc.id, 10))) + 1
-        : 1
-    ).toString();
-    setFlashCards((prevflashcards) => [
-      ...prevflashcards,
-      { id: newId, question: "", answer: "" },
-    ]);
+    if(flashcards){
+      const newId = (
+        flashcards.length
+          ? Math.max(...flashcards.map((fc) => parseInt(fc.id, 10))) + 1
+          : 1
+      ).toString();
+      flashcards && setFlashCards((prevflashcards) => [
+        ...prevflashcards,
+        { id: newId, question: "", answer: "" },
+      ]);
+    }
   };
 
   const handleRemoveFlashCard = (id: string) => {
-    setFlashCards(flashcards.filter((fc) => fc.id !== id));
+    setFlashCards(flashcards && flashcards.filter((fc) => fc.id !== id));
   };
 
   const handleUpdateFlashCard = (
     id: string,
     updatedData: Partial<FlashCardData>
   ) => {
-    setFlashCards((prevFlashCards) => {
-      const newFlashCards = prevFlashCards.map((fc) => {
-        if (fc.id === id) {
-          return { ...fc, ...updatedData };
-        }
-        return fc;
-      });
-      return newFlashCards;
-    });
+    setFlashCards(
+      flashcards && flashcards.map((fc) => (fc.id === id ? { ...fc, ...updatedData } : fc))
+    );
   };
 
   useEffect(() => {
@@ -85,14 +85,11 @@ export const DeckForm = () => {
     try {
       setIsLoading(true);
       await saveDeck({
-        title,
-        description,
-        flashcards,
+        title: title!,
+        description: description!,
+        flashcards: flashcards!,
         visibility: visible,
-        folderid: folder,
-      });
-      toast({
-        title: "Deck created successfully",
+        folderid: folder!,
       });
       router.push("/my-decks");
     } catch (error: any) {
@@ -122,6 +119,7 @@ export const DeckForm = () => {
         <Input
           className="outline-none w-full py-4 border-b-2 border-[--purple] placeholder:text-gray-300 bg-transparent"
           placeholder="Enter a title e.g 'Organic Chemistry Chapter 4'"
+          value={title!}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
             setTitle(e.target.value)
           }
@@ -129,6 +127,7 @@ export const DeckForm = () => {
         <Textarea
           className="outline-none w-full py-4 border-b-2 border-[--purple] placeholder:text-gray-300 bg-transparent"
           placeholder="Add a description (optional)"
+          value={description!}
           onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
             setDescription(e.target.value)
           }
@@ -161,7 +160,7 @@ export const DeckForm = () => {
         </section>
       </div>
       <div className="flex flex-col gap-6 max-w-[1000px] w-full self-center">
-        {flashcards.map((flashcard, index) => (
+        {flashcards && flashcards.map((flashcard, index) => (
           <NewFlashCard
             index={index}
             key={flashcard.id}
@@ -182,4 +181,4 @@ export const DeckForm = () => {
       </div>
     </section>
   );
-};
+}

@@ -87,7 +87,7 @@ export const DeckDocker = ({
             )}
             {userid === authorid && (
               <>
-                <DropdownMenuItem>Edit</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => router.push(`/edit/${id}`)}>Edit</DropdownMenuItem>
                 <DropdownMenuItem
                   className="text-red-500"
                   onClick={() => handleDelete(id)}
