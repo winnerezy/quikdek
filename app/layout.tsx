@@ -8,8 +8,8 @@ const roboto = Noto_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Quick Deck",
-  description: "A flash card app",
+  title: "Quikdek",
+  description: "Study smater and easier",
 };
 
 export default function RootLayout({
