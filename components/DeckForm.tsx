@@ -97,6 +97,9 @@ export const DeckForm = () => {
       router.push("/my-decks");
     } catch (error: any) {
       console.log(error.message);
+      toast({
+        title: "Failed to create deck",
+      });
     } finally {
       setIsLoading(false);
     }

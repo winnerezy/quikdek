@@ -154,7 +154,7 @@ export const getDeck = async (deckId: string) => {
 
 export const deleteDeck = async (id: string) => {
   try {
-     await prisma.folders.delete({
+     await prisma.decks.delete({
       where: {
         id
       }

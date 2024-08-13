@@ -10,6 +10,7 @@ import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useToast } from "./ui/use-toast";
 
 export const NewFolderModal = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -18,11 +19,16 @@ export const NewFolderModal = () => {
   const [name, setName] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
+  const {toast} = useToast()
+
   const handleFolder = async () => {
     setIsLoading(true);
     await createFolder(name);
     setIsLoading(false);
     dispatch(closeNewFolderModal());
+    toast({
+      title: "Created folder successfully",
+    });
     dispatch(fetchFolders())
   };
 
@@ -67,7 +73,7 @@ export const NewFolderModal = () => {
           disabled={isLoading}
         >
           {isLoading ? (
-            <span className="loading loading-dots loading-md self-center"></span>
+            <span className="loading loading-dots loading-md self-center w-35"></span>
           ) : (
             "Add Folder"
           )}

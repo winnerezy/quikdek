@@ -12,6 +12,7 @@ import {
 } from "./ui/dropdown-menu";
 import { addDeck, deleteDeck, getDecks } from "@/lib/actions";
 import { useRouter } from "next/navigation";
+import { useToast } from "./ui/use-toast";
 
 export const DeckDocker = ({
   id,
@@ -27,6 +28,8 @@ export const DeckDocker = ({
   authorid: string;
 }) => {
   const router = useRouter();
+
+  const {toast} = useToast()
 
   const [current, setCurrent] = useState<number>(0);
 
@@ -45,6 +48,10 @@ export const DeckDocker = ({
 
   const handleDelete = async (id: string) => {
     await deleteDeck(id);
+    toast({
+      title: "Deck deleted successfully",
+      variant: "destructive"
+    });
     router.push("/my-decks");
   };
   return (

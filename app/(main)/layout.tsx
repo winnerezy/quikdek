@@ -9,6 +9,7 @@ import { Provider } from "react-redux";
 import { store } from "@/lib/redux/store";
 import { NewFolderModal } from "@/components/NewFolderModal";
 import { Header } from "@/components/Header";
+import { Toaster } from "@/components/ui/toaster";
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -33,6 +34,7 @@ export default function RootLayout({
       </section>
      </div>
       <NewFolderModal />
+      <Toaster />
     </Provider>
   );
 }
