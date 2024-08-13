@@ -29,7 +29,7 @@ export default function RootLayout({
         <Sidebar />
         <main className="flex flex-col w-full min-h-screen px-4 mb-16">
           {children}
-          <Footer />
+          {/* <Footer /> */}
         </main>
       </section>
      </div>

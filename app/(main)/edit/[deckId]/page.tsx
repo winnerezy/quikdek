@@ -7,8 +7,8 @@ export default function EditDeck({
   params: { deckId: string };
 }) {
   return (
-    <div>
+    <section className='w-full min-h-screen'>
       <EditForm deckId={deckId}/>
-    </div>
+    </section>
   )
 }

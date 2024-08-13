@@ -2,6 +2,7 @@ import NextAuth from "next-auth";
 import github from "next-auth/providers/github";
 import google from "next-auth/providers/google";
 import { prisma } from "./lib/prisma";
+import { Plan } from "@prisma/client";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
@@ -10,8 +11,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       clientSecret: process.env.GITHUB_CLIENT_SECRET
     }),
     google({
-      clientId: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!
     })
   ],
   callbacks: {
@@ -20,6 +21,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
     async signIn({ user }) {
       try {
+        console.log(user)
         const existingUser = await prisma.users.findUnique({
           where: {
             email: user.email!,
@@ -31,7 +33,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             data: {
               email: user.email!,
               avatar: user.image!,
-              username: user.name!,
+              username: user.name!
             },
           });
         }

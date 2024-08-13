@@ -17,7 +17,7 @@ model Users {
   flashcards Flashcards[]
   saveddecks  String[]
   joinedat   DateTime     @default(now())
-  plan       Plan         @default(FREE)
+  // plan       Plan         @default(FREE)
 
   @@map("users")
 }
