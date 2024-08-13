@@ -120,5 +120,6 @@ body {
   font-size: 1.5rem;
   border-radius: 10px;
   text-align: center;
+  padding: 10px;
   background-color: var(--card);
 }
