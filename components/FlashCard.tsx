@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export const FlashCard = ({
   question,
@@ -9,6 +9,12 @@ export const FlashCard = ({
   answer: string;
 }) => {
   const [isFlipped, setIsFlipped] = useState<boolean>(false);
+
+  useEffect(()=> {
+    // Reset the card when it's updated
+    setIsFlipped(false); 
+  }, [question])
+
   return (
     <motion.div
       onClick={() => setIsFlipped(!isFlipped)}
@@ -16,7 +22,7 @@ export const FlashCard = ({
       animate={{
         rotateX: isFlipped ? 180 : 0,
       }}
-      transition={{ duration: 0.3 }}
+      transition={{ duration: 0.1 }}
       style={{
         transformStyle: "preserve-3d",
         perspective: "1000px",
