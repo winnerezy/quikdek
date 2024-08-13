@@ -55,4 +55,5 @@ type DeckProps = {
     flashcards: FlashCardData[]
     user?: User
     additionalusers?: String[]
+    folder?: Folder
 }

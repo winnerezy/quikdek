@@ -67,6 +67,60 @@ export const saveDeck = async ({
   }
 };
 
+export const editDeck = async ({
+  id,
+  flashCardId,
+  title,
+  description,
+  visibility,
+  flashcards
+}: {
+  id: string
+  flashCardId: string[]
+  title: string;
+  description: string | null;
+  visibility: visibility;
+  flashcards: FlashCardData[];
+}) => {
+  try {
+    const user = await getCurrentUser();
+
+    const deck = await prisma.decks.update({
+      where: {
+        id
+      },
+      data: {
+        title,
+        description,
+        userid: user?.id!,
+        visibility,
+      },
+    });
+    // saving all the flash cards individually
+    await Promise.all(
+      flashcards.map(
+        async (flashcard) => (
+          await prisma.flashcards.updateMany({
+            where: {
+              id: {
+                in: flashCardId,
+              }
+            },
+            data: {
+              question: flashcard.question,
+              answer: flashcard.answer,
+              userid: user?.id!,
+              deckid: deck.id,
+            },
+          })
+        )
+      )
+    );
+  } catch (error: any) {
+    console.log("Getting current saving deck" + error.message);
+  }
+};
+
 export const handleSignOut = async () => {
   await signOut();
 };
@@ -143,6 +197,7 @@ export const getDeck = async (deckId: string) => {
       include: {
         flashcards: true,
         user: true,
+        folder: true
       }
     });
     return deck;
