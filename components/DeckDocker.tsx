@@ -44,6 +44,9 @@ export const DeckDocker = ({
   const handleAdd = async (id: string) => {
     await addDeck(id);
     // await getDecks();
+    toast({
+      title: "Deck added successfully"
+    });
   };
 
   const handleDelete = async (id: string) => {
