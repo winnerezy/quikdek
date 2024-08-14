@@ -27,7 +27,7 @@ export default function RootLayout({
       <Header/>
      <section className="w-full flex">
         <Sidebar />
-        <main className="flex flex-col w-full min-h-screen px-4 mb-16">
+        <main className="flex flex-col w-full min-h-screen px-4 mb-16 lg:ml-[250px]">
           {children}
           {/* <Footer /> */}
         </main>
