@@ -107,11 +107,11 @@ export const Header = () => {
               className="rounded-full"
             />
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="border-none h-[300px] space-y-2 mr-4 p-2 w-[300px] bg-background text-[--text-2]">
+          <DropdownMenuContent align="end" className="border-none h-[300px] space-y-2 p-2 w-[300px] bg-background text-[--text-2]">
             <DropdownMenuLabel>
               <div className="w-full flex gap-2 items-center">
                 <div className="avatar">
-                  <div className="w-14 rounded-full">
+                  <div className="w-12 rounded-full">
                     <Image
                       src={user?.avatar!}
                       width={20}
@@ -122,7 +122,7 @@ export const Header = () => {
                 </div>
                 <section className="flex flex-col">
                   <p>{user?.username}</p>
-                  <p>{user?.email}</p>
+                  <p className="text-xs font-light">{user?.email}</p>
                 </section>
               </div>
             </DropdownMenuLabel>

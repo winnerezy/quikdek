@@ -23,7 +23,7 @@ import { Decks, visibility } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import { useToast } from "./ui/use-toast";
 
-export default function EditForm({deckId}: {deckId: string}) {
+export default function EditForm({ deckId }: { deckId: string }) {
   const [deck, setDeck] = useState<DeckProps | null>(null);
   useEffect(() => {
     async function fetchDeck() {
@@ -47,7 +47,7 @@ export default function EditForm({deckId}: {deckId: string}) {
 
   const dispatch = useDispatch<AppDispatch>();
 
-  const {toast} = useToast()
+  const { toast } = useToast();
 
   const router = useRouter();
   const [title, setTitle] = useState<string>(deck?.title!);
@@ -128,7 +128,7 @@ export default function EditForm({deckId}: {deckId: string}) {
         <>
           <div className="flex flex-col max-w-[1000px] w-full space-y-8 self-center">
             <h3 className="font-semibold text-[--purple] text-2xl max-md:mt-20">
-              Create a deck
+              Edit Deck
             </h3>
             <button
               className="bg-[--purple] w-24 h-10 rounded-lg self-end text-white"
@@ -170,7 +170,10 @@ export default function EditForm({deckId}: {deckId: string}) {
                   </SelectGroup>
                 </SelectContent>
               </Select>
-              <Select onValueChange={(e: visibility) => setVisible(e)} defaultValue={visible}>
+              <Select
+                onValueChange={(e: visibility) => setVisible(e)}
+                defaultValue={visible}
+              >
                 <SelectTrigger className="w-[180px] border border-[--light-purple]">
                   <SelectValue placeholder="Public" />
                 </SelectTrigger>
