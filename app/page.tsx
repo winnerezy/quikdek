@@ -33,6 +33,7 @@ export default function Welcome() {
         </li>
       </ul>
       <div className="flex flex-col gap-2 items-center justify-center w-full mt-48 space-y-2">
+      <Link href="https://www.producthunt.com/posts/quikdek?embed=true&utm_source=badge-featured&utm_medium=badge&utm_souce=badge-quikdek" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=480020&theme=light" alt="Quikdek - Study&#0032;the&#0032;way&#0032;you&#0032;chose | Product Hunt" width="250" height="54" /></Link>
         <h3 className="text-3xl sm:text-4xl md:text-6xl font-bold">
           Welcome To QuikDek
         </h3>
