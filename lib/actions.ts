@@ -100,12 +100,14 @@ export const editDeck = async ({
     await Promise.all(
       flashcards.map(
         async (flashcard) => (
-          await prisma.flashcards.updateMany({
+          await prisma.flashcards.deleteMany({
             where: {
               id: {
-                in: flashCardId,
+                in: flashCardId
               }
-            },
+            }
+          }),
+          await prisma.flashcards.create({
             data: {
               question: flashcard.question,
               answer: flashcard.answer,

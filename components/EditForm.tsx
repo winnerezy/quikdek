@@ -56,27 +56,15 @@ export default function EditForm({ deckId }: { deckId: string }) {
   const [visible, setVisible] = useState<visibility>(deck?.visibility!);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const [flashcards, setFlashCards] = useState<FlashCardData[] | undefined>(
-    deck?.flashcards
-  );
+  const [flashcards, setFlashCards] = useState<FlashCardData[]>([]);
 
   const handleNewFlashCard = () => {
-    if (flashcards) {
-      const newId = (
-        flashcards.length
-          ? Math.max(...flashcards.map((fc) => parseInt(fc.id, 10))) + 1
-          : 1
-      ).toString();
-      flashcards &&
-        setFlashCards((prevflashcards) => [
-          ...prevflashcards!,
-          { id: newId, question: "", answer: "" },
-        ]);
-    }
+    const newId = (flashcards.length + 1).toString();
+    setFlashCards([...flashcards, { id: newId, question: "", answer: "" }]);
   };
 
   const handleRemoveFlashCard = (id: string) => {
-    setFlashCards(flashcards && flashcards.filter((fc) => fc.id !== id));
+    setFlashCards(flashcards.filter((fc) => fc.id !== id));
   };
 
   const handleUpdateFlashCard = (
@@ -84,11 +72,15 @@ export default function EditForm({ deckId }: { deckId: string }) {
     updatedData: Partial<FlashCardData>
   ) => {
     setFlashCards(
-      flashcards &&
-        flashcards.map((fc) => (fc.id === id ? { ...fc, ...updatedData } : fc))
+      flashcards && flashcards.length
+        ? flashcards.map((fc) =>
+            fc.id === id ? { ...fc, ...(updatedData || {}) } : fc
+          )
+        : []
     );
   };
 
+  console.log(flashcards)
   useEffect(() => {
     dispatch(fetchFolders());
   }, []);
@@ -108,7 +100,7 @@ export default function EditForm({ deckId }: { deckId: string }) {
         flashCardId: deck?.flashcards.map((flashcard) => flashcard.id)!,
         title: title!,
         description: description!,
-        flashcards: flashcards!,
+        flashcards: flashcards,
         visibility: visible,
       });
       toast({
