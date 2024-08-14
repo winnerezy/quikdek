@@ -62,13 +62,13 @@ export const Sidebar = () => {
         <TbCards className="size-6 absolute left-2" />
         <p className="tracking-wide ml-16">My Decks</p>
       </Link>
-      <Link
+      {/* <Link
         href={"/notifications"}
         className="relative flex gap-4 w-48 h-10 rounded-lg hover:bg-[--hover] items-center text-md"
       >
         <IoIosNotificationsOutline className="size-6 absolute left-2" />
         <p className="tracking-wide ml-16">Notifications</p>
-      </Link>
+      </Link> */}
       <hr className="w-[90%]" />
       <Link
         href={"/create-deck"}
@@ -77,13 +77,13 @@ export const Sidebar = () => {
         <IoCreateOutline className="size-6 absolute left-2" />
         <p className="tracking-wide ml-16">Create Deck</p>
       </Link>
-      <Link
+      {/* <Link
         href={"/practice-quiz"}
         className="relative flex gap-4 w-48 h-10 rounded-lg hover:bg-[--hover] items-center text-md"
       >
         <LuBookOpen className="size-6 absolute left-2" />
         <p className="tracking-wide ml-16">Practice Quiz</p>
-      </Link>
+      </Link> */}
     </aside>
   );
 };

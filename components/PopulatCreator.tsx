@@ -1,6 +1,6 @@
 
 
-export const RecentDecks = () => {
+export const PopulatCreator = () => {
   return (
     <div>RecentDecks</div>
   )

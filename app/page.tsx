@@ -4,6 +4,7 @@ import Link from "next/link";
 import React from "react";
 import one from "../public/1.png"
 import two from "../public/2.png"
+import three from "../public/3.png"
 
 export default function Welcome() {
   return (
@@ -49,11 +50,15 @@ export default function Welcome() {
       </div>
       <div className="flex flex-col gap-8 items-center">
         <h5 className="font-semibold tracking-wide text-2xl md:text-4xl underline">Create your experience</h5>
-        <Image src={one} alt="1" className="md:w-[70%] rounded-sm"/>
+        <Image src={three} alt="1" className="md:w-[60%] rounded-sm"/>
       </div>
       <div className="flex flex-col gap-8 items-center">
         <h5 className="font-semibold tracking-wide text-2xl md:text-4xl underline">Study Better and Easier</h5>
-        <Image src={two} alt="2" className="md:w-[70%] rounded-sm"/>
+        <Image src={two} alt="2" className="md:w-[60%] rounded-sm"/>
+      </div>
+      <div className="flex flex-col gap-8 items-center">
+        <h5 className="font-semibold tracking-wide text-2xl md:text-4xl underline">Edit your deck</h5>
+        <Image src={one} alt="2" className="md:w-[60%] rounded-sm"/>
       </div>
     </section>
   );

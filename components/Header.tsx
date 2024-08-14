@@ -75,7 +75,7 @@ export const Header = () => {
           </svg>
         </Link>
       </div>
-      <SearchInput />
+      {/* <SearchInput /> */}
       <div className="h-14 flex gap-4 items-center">
         <DropdownMenu>
           <DropdownMenuTrigger className="outline-none">
@@ -91,7 +91,7 @@ export const Header = () => {
             <DropdownMenuItem>
               <div className="text-md font-semibold flex gap-4 items-center">
                 <TbCards />
-                <p>Create Deck</p>
+                <Link href="/create-deck">Create Deck</Link>
               </div>
             </DropdownMenuItem>
           </DropdownMenuContent>
@@ -107,7 +107,7 @@ export const Header = () => {
               className="rounded-full"
             />
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="border-none h-[300px] space-y-2 p-2 w-[300px] bg-background text-[--text-2]">
+          <DropdownMenuContent align="end" className="border-none space-y-2 p-2 w-[300px] bg-background text-[--text-2]">
             <DropdownMenuLabel>
               <div className="w-full flex gap-2 items-center">
                 <div className="avatar">
@@ -127,13 +127,13 @@ export const Header = () => {
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            {/* <DropdownMenuItem>
               <div className="text-md font-semibold flex gap-4 items-center">
                 <TbTrophy />
                 <p>12 Streaks</p>
               </div>
-            </DropdownMenuItem>
-            <DropdownMenuItem>
+            </DropdownMenuItem> */}
+            {/* <DropdownMenuItem>
               <Link
                 className="text-md font-semibold flex gap-4 items-center"
                 href="/profile"
@@ -141,8 +141,8 @@ export const Header = () => {
                 <CgProfile />
                 <p className="font-semibold">Profile</p>
               </Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem>
+            </DropdownMenuItem> */}
+            {/* <DropdownMenuItem>
               <Link
                 className="text-md font-semibold flex gap-4 items-center"
                 href="/settings"
@@ -150,7 +150,7 @@ export const Header = () => {
                 <CiSettings />
                 <p className="font-semibold">Settings</p>
               </Link>
-            </DropdownMenuItem>
+            </DropdownMenuItem> */}
             <DropdownMenuItem onClick={handleTheme}>
               {theme === "light" ? (
                 <div className="text-md font-semibold flex gap-4 items-center">
@@ -164,6 +164,7 @@ export const Header = () => {
                 </div>
               )}
             </DropdownMenuItem>
+            <DropdownMenuSeparator />
             <DropdownMenuItem>
               <button
                 className="text-md font-semibold flex gap-4 items-center"
