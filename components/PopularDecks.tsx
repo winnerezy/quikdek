@@ -34,13 +34,13 @@ export const PopularDecks = () => {
           slidesPerView: 1.3,
         },
         640: {
-          slidesPerView: 3,
+          slidesPerView: 3.5,
         },
         1024: {
-          slidesPerView: 3,
+          slidesPerView: 3.5,
         },
       }}
-      className="max-w-7xl w-full"
+      className="max-w-screen-2xl w-full"
     >
       {popularDecks.map((deck) => (
         <SwiperSlide key={deck.id}>

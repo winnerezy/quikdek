@@ -68,12 +68,12 @@ export const NewFolderModal = () => {
           }
         />
         <button
-          className="bg-[--purple] w-24 h-10 rounded-lg self-end p-2 absolute right-20 bottom-8 text-white"
+          className="bg-[--purple] w-36 h-10 rounded-lg self-end p-2 absolute right-20 bottom-8 text-white"
           onClick={handleFolder}
           disabled={isLoading}
         >
           {isLoading ? (
-            <span className="loading loading-dots loading-md self-center w-35"></span>
+            <span className="loading loading-dots loading-md self-center"></span>
           ) : (
             "Add Folder"
           )}
