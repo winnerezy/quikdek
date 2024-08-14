@@ -6,8 +6,7 @@ import { AppDispatch } from "@/lib/redux/store";
 import { fetchFolders } from "@/lib/redux/thunk";
 import { State } from "@/types";
 import { Input } from "@headlessui/react";
-import Box from "@mui/material/Box";
-import Modal from "@mui/material/Modal";
+import { Modal, Box } from "@mui/material";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useToast } from "./ui/use-toast";
@@ -19,7 +18,7 @@ export const NewFolderModal = () => {
   const [name, setName] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const {toast} = useToast()
+  const { toast } = useToast();
 
   const handleFolder = async () => {
     setIsLoading(true);
@@ -29,7 +28,7 @@ export const NewFolderModal = () => {
     toast({
       title: "Created folder successfully",
     });
-    dispatch(fetchFolders())
+    dispatch(fetchFolders());
   };
 
   return (
@@ -37,6 +36,13 @@ export const NewFolderModal = () => {
       open={open}
       onClose={() => dispatch(closeNewFolderModal())}
       className="flex items-center justify-center"
+      slotProps={{
+        backdrop: {
+          sx: {
+            backdropFilter: "blur(8px)", // this is a guideline
+          },
+        },
+      }}
     >
       <Box
         sx={{
@@ -54,7 +60,7 @@ export const NewFolderModal = () => {
           marginRight: 2,
           marginLeft: 2,
           borderColor: "var(--border}",
-          borderWidth: 2
+          borderWidth: 2,
         }}
       >
         <h4 className="font-bold text-3xl absolute top-8 left-20 text-[--purple]">
